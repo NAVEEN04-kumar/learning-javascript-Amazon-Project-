@@ -136,6 +136,8 @@ export function renderOrderSummary() {
         );
 
         container.remove();
+
+        renderPaymentSummary();
         
       });
     });
