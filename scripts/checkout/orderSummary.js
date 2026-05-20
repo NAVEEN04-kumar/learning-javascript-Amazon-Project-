@@ -15,7 +15,7 @@ import {
 } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 
-export function renderOrderSummary() {
+export function renderOrderSummary() {  
 
   let cartSummaryHTML = '';
 
