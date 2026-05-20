@@ -65,7 +65,10 @@ export function renderOrderSummary() {
                 <span class="update-quantity-link link-primary">
                   Update
                 </span>
-                <span class="delete-quantity-link link-primary js-delete-link" data-product-id = "${matchingProduct.id}">
+                <span class="delete-quantity-link link-primary 
+                js-delete-link
+                js-delete-link-${matchingProduct.id}"
+                data-product-id = "${matchingProduct.id}">
                   Delete
                 </span>
               </div>
@@ -107,7 +110,7 @@ export function renderOrderSummary() {
       data-product-id="${matchingProduct.id}"
       data-delivery-option-id="${deliveryOption.id}">
 
-          <input type="radio"
+          <input type="radio" 
             ${isChecked ? 'checked': ''}
             class="delivery-option-input"
             name="delivery-option-${matchingProduct.id}">
@@ -150,7 +153,7 @@ export function renderOrderSummary() {
           const { productId, deliveryOptionId} = element.dataset;
           updateDeliveryOption(productId, deliveryOptionId);
           renderOrderSummary();
-          renderPaymentSummary();2
+          renderPaymentSummary();
         });
       });
 }
