@@ -50,11 +50,20 @@ describe('test suite: renderOrderSummary', () => {
 
   document.querySelector('.js-test-container').innerHTML = ``;
 
-});
+  });
 
   it('remove a product', () => {
 
     document.querySelector(`.js-delete-link-${productId1}`).click();
+
+    expect(
+      localStorage.setItem
+    ).toHaveBeenCalledWith('cart', JSON.stringify([{
+      productId: productId2,
+      quantity: 1,
+      deliveryOptionId: '2'
+    }]));
+
     expect(
       document.querySelectorAll('.js-cart-item-container').length
     ).toEqual(1);
@@ -72,6 +81,6 @@ describe('test suite: renderOrderSummary', () => {
 
     document.querySelector('.js-test-container').innerHTML = ``;
 
-  });  
+  });
 
 });
