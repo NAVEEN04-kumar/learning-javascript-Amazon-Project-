@@ -2,15 +2,15 @@ import { validDeliveryOption } from "./deliveryOptions.js";
 
 class Cart {
   cartItem;
-  localStorageKey;
+  #localStorageKey;
 
   constructor(localStorageKey) {
-    this.localStorageKey = localStorageKey;
-    this.loadFromStorage();
+    this.#localStorageKey = localStorageKey;
+    this.#loadFromStorage();
   }
 
-  loadFromStorage() {
-    this.cartItem = JSON.parse(localStorage.getItem(this.localStorageKey));
+  #loadFromStorage() {
+    this.cartItem = JSON.parse(localStorage.getItem(this.#localStorageKey));
 
     if (!this.cartItem) {
       this.cartItem = [{
@@ -26,7 +26,7 @@ class Cart {
   }
 
   saveToStorage() {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItem));
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItem));
   }
 
   addToCart(productId) {
@@ -93,7 +93,10 @@ class Cart {
 //instance- each object generated with class
 //oop has extra feature
 /*1. constructor - run some setup code
-  a constructor let us put a setup code inside the class
+     a constructor let us put a setup code inside the class
+
+  2. private properties and methods
+     classes let us make a property(#) or to the method private(#), which means it can only be accessed inside the class
 */
 const cart = new Cart('cart-oop');
 const businessCart = new Cart('cart-business');
