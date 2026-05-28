@@ -1,19 +1,7 @@
 import formatCurrency from "../scripts/utils/money.js";
 
-export function getProduct(productId) {
-  let matchingProduct;
-
-  products.forEach((product) => {
-    if(product.id === productId) {
-      matchingProduct = product;
-    }    
-  });
-
-  return matchingProduct;
-
-}
-
 class Product {
+
   id;
   image;
   name;
@@ -28,8 +16,8 @@ class Product {
     this.priceCents = productDetails.priceCents;
   }
 
-  getStarsurl() {
-    return `images/ratings/rating-${this.rating.stars * 10}.png`;
+  getStarsUrl() {
+    return `images/ratings/rating-${(this.rating.stars) * 10}.png`;
   }
 
   getPrice() {
@@ -39,26 +27,53 @@ class Product {
   extraInfoHTML() {
     return '';
   }
+
 }
 
-//inheritance
-class Clothing extends Product  {
+class Clothing extends Product {
+
   sizeChartLink;
 
-  constructor(productDetails) {
+  constructor(productDetails) {   
     super(productDetails);
-    this.sizeChartLink = productDetails.sizeChartLink
+    this.sizeChartLink = productDetails.sizeChartLink;
   }
 
   extraInfoHTML() {
     //super.extraInfoHTML();
     return `
-     <a href="${this.sizeChartLink}" target ="_blank">
+    <a href="${this.sizeChartLink}" target="_blank">
       Size Chart
-     </a>
+    </a>`;
+  }
+
+}
+
+class Appliance extends Product {
+
+  instructionsLink;
+  warrantyLink;
+
+  constructor(productDetails) {
+    super(productDetails);
+    this.instructionsLink = productDetails.instructionsLink;
+    this.warrantyLink = productDetails.warrantyLink;
+  }
+
+  extraInfoHTML() {
+    //super.extraInfoHTML();
+    return `
+    <a href="${this.instructionsLink}" target="_blank">
+      Instructions
+    </a>
+    <a href="${this.warrantyLink}" target="_blank">
+      Warranty
+    </a>
     `;
   }
+
 }
+
 /*
   const date = new Date();
   console.log(date.toLocaleTimeString());
@@ -93,7 +108,8 @@ const object3 = {
 object3.method();
 */
 
-export const products = [{
+export const products = [
+  {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
     name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
@@ -152,7 +168,10 @@ export const products = [{
       "toaster",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type: "appliance",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png"
   },
   {
     id: "3ebe75dc-64d2-4137-8860-1f5a963e534b",
@@ -337,7 +356,10 @@ export const products = [{
       "water boiler",
       "appliances",
       "kitchen"
-    ]
+    ],
+    type: "appliance",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png"
   },
   {
     id: "6b07d4e7-f540-454e-8a1e-363f25dbae7d",
@@ -642,7 +664,10 @@ export const products = [{
       "coffeemakers",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type: "appliance",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png"
   },
   {
     id: "02e3a47e-dd68-467e-9f71-8bf6f723fdae",
@@ -702,7 +727,10 @@ export const products = [{
       "food blenders",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type: "appliance",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png"
   },
   {
     id: "36c64692-677f-4f58-b5ec-0dc2cf109e27",
@@ -750,11 +778,50 @@ export const products = [{
       "apparel",
       "mens"
     ]
+  },
+  {
+    id: "bc2847e9-5323-403f-b7cf-57fde044a956",
+    image: "images/products/nothing-phone-mobile-phone.webp.jpg",
+    name: "Nothing Phone (4a) Pro - 256GB, 12GB RAM, Black",
+    rating: {
+      stars: 4.5,
+      count: 8704
+    },
+    priceCents: 43028,
+    keywords: [
+      "electronics",
+      "smartphones",
+      "android",
+      "nothing phone",
+      "mobile"
+    ],
+    type: "appliance",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png"
   }
-].map((productDetails) => { 
-  if (productDetails.type === 'clothing') {
-    return new Clothing(productDetails);
+].map( productDetails => {
+  if(productDetails.type) {
+
+    if(productDetails.type == "clothing") {
+      return new Clothing(productDetails);
+    }
+
+    if(productDetails.type == "appliance") {
+      return new Appliance(productDetails);
+    }
   }
+  
   return new Product(productDetails);
 });
 
+export function getProduct(productId) {
+  let matchingProduct;
+
+  products.forEach( product => {
+    if(product.id === productId) {
+      matchingProduct = product;
+    }
+  });
+
+  return matchingProduct;
+}
