@@ -1,4 +1,4 @@
-import { loadFromStorage, cart } from '../../data/cart.js';
+import { cart } from '../../data/cart-class.js';
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 
 //integration test: how the page looks and how the page behaves
@@ -29,7 +29,7 @@ describe('test suite: renderOrderSummary', () => {
       }]);
     });
 
-    loadFromStorage();
+    cart.loadFromStorage;
 
     renderOrderSummary();
   });
@@ -72,7 +72,7 @@ describe('test suite: renderOrderSummary', () => {
 
     expect(
       localStorage.setItem
-    ).toHaveBeenCalledWith('cart', JSON.stringify([{
+    ).toHaveBeenCalledWith('cart-oop', JSON.stringify([{
       productId: productId2,
       quantity: 1,
       deliveryOptionId: '2'
@@ -98,17 +98,17 @@ describe('test suite: renderOrderSummary', () => {
       document.querySelector(`.js-cart-item-container-${productId2}`)
     ).not.toEqual(null);
 
-    expect (cart.length).toEqual(1);
-    expect (cart[0].productId).toEqual(productId2);
+    expect (cart.cartItem.length).toEqual(1);
+    expect (cart.cartItem[0].productId).toEqual(productId2);
     
   });
 
   it('updates the delivery option', () => {
     document.querySelector(`.js-delivery-option-${productId1}-3`).click();
 
-    expect(cart.length).toEqual(2);
-    expect(cart[0].productId).toEqual(productId1);
-    expect(cart[0].deliveryOptionId).toEqual('3');
+    expect(cart.cartItem.length).toEqual(2);
+    expect(cart.cartItem[0].productId).toEqual(productId1);
+    expect(cart.cartItem[0].deliveryOptionId).toEqual('3');
 
     expect(
       document.querySelector(`.js-delivery-option-input-${productId1}-3`).checked

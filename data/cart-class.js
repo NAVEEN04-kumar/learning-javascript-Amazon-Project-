@@ -25,6 +25,8 @@ class Cart {
     }
   }
 
+  get loadFromStorage() { return this.#loadFromStorage(); }
+
   saveToStorage() {
     localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItem));
   }
@@ -98,8 +100,4 @@ class Cart {
   2. private properties and methods
      classes let us make a property(#) or to the method private(#), which means it can only be accessed inside the class
 */
-const cart = new Cart('cart-oop');
-const businessCart = new Cart('cart-business');
-
-console.log(cart);
-console.log(businessCart);
+export const cart = new Cart('cart-oop');

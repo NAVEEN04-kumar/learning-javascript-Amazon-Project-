@@ -1,8 +1,4 @@
-import { 
-  cart,
-  removeFromCart,
-  updateDeliveryOption 
-} from '../../data/cart.js';
+import { cart } from '../../data/cart-class.js';
 import { 
   products,
   getProduct 
@@ -19,7 +15,7 @@ export function renderOrderSummary() {
 
   let cartSummaryHTML = '';
 
-  cart.forEach((cartItem) => {
+  cart.cartItem.forEach((cartItem) => {
     
     const productId = cartItem.productId
 
@@ -135,7 +131,7 @@ export function renderOrderSummary() {
     .forEach((link) => {
       link.addEventListener('click', () => {
         const productId = link.dataset.productId;
-        removeFromCart(productId);
+        cart.removeFromCart(productId);
 
         const container = document.querySelector(
           `.js-cart-item-container-${productId}`
@@ -151,7 +147,7 @@ export function renderOrderSummary() {
       .forEach((element) => {
         element.addEventListener('click', () => {
           const { productId, deliveryOptionId} = element.dataset;
-          updateDeliveryOption(productId, deliveryOptionId);
+          cart.updateDeliveryOption(productId, deliveryOptionId);
           renderOrderSummary();
           renderPaymentSummary();
         });
