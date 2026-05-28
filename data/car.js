@@ -1,4 +1,5 @@
 class Car {
+
   #brand;
   #model;
   speed = 0;
@@ -10,6 +11,7 @@ class Car {
   }
 
   get brand() { return this.#brand; }
+
   get model() { return this.#model; }
 
   displayInfo() {
@@ -18,22 +20,26 @@ class Car {
   }
 
   go() {
+
     if (this.isTrunkOpen) {
       console.log("Can't move, trunk is open!");
       return;
     }
+
     this.speed += 5;
     if (this.speed > 200) this.speed = 200;
     this.displayInfo();
   }
 
   brake() {
+
     this.speed -= 5;
     if (this.speed < 0) this.speed = 0;
     this.displayInfo();
   }
 
   openTrunk() {
+
     if (this.speed === 0) {
       this.isTrunkOpen = true;
       console.log('Trunk opened');
@@ -43,12 +49,20 @@ class Car {
   }
 
   closeTrunk() {
-    this.isTrunkOpen = false;
-    console.log('Trunk closed');
+    if (this.speed === 0 && this.isTrunkOpen) {
+      this.isTrunkOpen = false;
+      console.log('Trunk closed');
+    } else if (this.speed > 0) {
+      console.log("Can't close trunk, car is moving");
+    } else {
+      console.log("Trunk is already closed");
+    }
   }
+
 }
 
 class RaceCar extends Car {
+
   acceleration;
 
   constructor(carDetails) {
@@ -61,9 +75,18 @@ class RaceCar extends Car {
   }
 
   go() {
-    if (this.isTrunkOpen) return;
+    this.acceleration += 5;
     this.speed += this.acceleration;
     if (this.speed > 300) this.speed = 300;
+    this.displayInfo();
+  }
+
+  brake() {
+    this.acceleration -= 5;
+    if (this.acceleration < 0) this.acceleration = 0;
+    this.speed -= this.acceleration;
+    if (this.speed < 0) this.speed = 0;
+    if (this.speed === 0) this.acceleration = 0;  // ✅ reset acceleration when stopped
     this.displayInfo();
   }
 
@@ -74,7 +97,9 @@ class RaceCar extends Car {
   closeTrunk() {
     console.log("Race cars don't have a trunk!");
   }
+
 }
+
 
 const [Toyota, Tesla] = [
   { brand: 'Toyota', model: 'Corolla' },
@@ -84,14 +109,13 @@ const [Toyota, Tesla] = [
 const McLaren = new RaceCar({ brand: 'McLaren', model: 'F1', acceleration: 20 });
 
 Toyota.go();
-Toyota.openTrunk();
+Toyota.openTrunk()
+Toyota.closeTrunk();
 
-McLaren.go();
-McLaren.go();
-McLaren.go();
-McLaren.openTrunk();
+Toyota.brake();
+Toyota.closeTrunk();
+
 McLaren.brake();
 
-console.log(Toyota.brand);
-Toyota['#brand'] = 'Hacked!';
-console.log(Toyota.brand);
+McLaren.go();
+McLaren.go();
