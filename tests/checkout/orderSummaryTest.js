@@ -1,5 +1,6 @@
 import { cart } from '../../data/cart-class.js';
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
+import { loadProducts } from '../../data/products.js';
 
 //integration test: how the page looks and how the page behaves
 //Hooks: Let us run some code for each test
@@ -7,6 +8,13 @@ describe('test suite: renderOrderSummary', () => {
 
   const productId1 = "e43638ce-6aa0-4b85-b27f-e1d07eb678c6";
   const productId2 = "15b6fc6f-327a-4ec4-896f-486349e85a3d";
+
+  beforeAll((done) => {
+    loadProducts(() => {
+      done();
+    });
+  });
+
 
   //beforeEach Hook
   beforeEach(() => {
