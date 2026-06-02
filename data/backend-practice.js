@@ -11,6 +11,8 @@
   https://amazon.com - domain name
     |        
   means use http to communicate with the domain  
+
+  Url path
 */
 
 const xhr =  new XMLHttpRequest();
@@ -19,7 +21,7 @@ xhr.addEventListener('load', () => {
   console.log(xhr.response);
 });
 
-console.log(xhr);
+console.log(xhr);  
 
 xhr.open('GET', 'https://supersimplebackend.dev');
 xhr.send(); 

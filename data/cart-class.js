@@ -101,3 +101,18 @@ class Cart {
      classes let us make a property(#) or to the method private(#), which means it can only be accessed inside the class
 */
 export const cart = new Cart('cart-oop');
+
+
+export function loadCart(fun) {
+
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+
+    console.log(xhr.response);
+    fun();
+  });
+
+  xhr.open('GET', 'https://supersimplebackend.dev/cart');
+  xhr.send();
+}
