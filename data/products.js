@@ -130,17 +130,12 @@ export function loadProductsFetch() {
     
       return new Product(productDetails);
     });
-
-    console.log('load products');
-
   });
+
+  console.log('loaded');
 
   return promise;
 }
-
-loadProductsFetch().then(() => {
-  console.log('next step');
-});
 
 /*
 export function loadProducts(fun) {
