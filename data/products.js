@@ -136,8 +136,6 @@ export function loadProductsFetch() {
   return promise;
 }
 
-loadProductsFetch();
-
 /*
 export function loadProducts(fun) {
 

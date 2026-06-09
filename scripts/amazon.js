@@ -5,10 +5,6 @@ import {
  } from '../data/products.js';
 import  formatCurrency  from './utils/money.js';
 
-loadProductsFetch().then(() => {
-  renderPRoductsGrid();
-});
-
 function renderPRoductsGrid() {
  
   let productsHTML = '';
@@ -91,3 +87,7 @@ function renderPRoductsGrid() {
     });
   });
 }
+
+loadProductsFetch().then(() => {
+  renderPRoductsGrid();
+});
