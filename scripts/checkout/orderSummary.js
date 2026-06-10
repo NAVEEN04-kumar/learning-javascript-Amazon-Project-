@@ -10,6 +10,7 @@ import {
   calculateDeliveryDate
 } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import renderCheckoutHeader from './checkoutHeader.js'
 
 export function renderOrderSummary() {  
 
@@ -49,7 +50,10 @@ export function renderOrderSummary() {
               </div>
               <div class="product-quantity js-product-quantity-${matchingProduct.id}">
                 <span>
-                  Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                  Quantity: <span class="
+                  quantity-label
+                  js-quantity-label-${matchingProduct.id}
+                  ">${cartItem.quantity}</span>
                 </span>
 
                 <span class= "update-quantity-link link-primary
@@ -130,13 +134,14 @@ export function renderOrderSummary() {
     .forEach((link) => {
       link.addEventListener('click', () => {
         const productId = link.dataset.productId;
+
         cart.removeFromCart(productId);
 
-        const container = document.querySelector(
-          `.js-cart-item-container-${productId}`
-        );
-
-        container.remove();
+        const container = document.querySelector(`.js-cart-item-container-${productId}`);
+        if (container) {
+          container.remove();
+        }
+        renderCheckoutHeader();
         renderPaymentSummary();
         
       });
@@ -177,8 +182,12 @@ export function renderOrderSummary() {
         const quantityLabel = document.querySelector(`
           .js-quantity-label-${productId}`
         );
-        quantityLabel.innerHTML = newQuantity;
 
+        if (quantityLabel) {
+          quantityLabel.innerHTML = newQuantity;
+        }
+
+        renderCheckoutHeader();
         renderPaymentSummary();
       });
     });
@@ -189,6 +198,7 @@ export function renderOrderSummary() {
       element.addEventListener('click', () => {
         const { productId, deliveryOptionId} = element.dataset;
         cart.updateDeliveryOption(productId, deliveryOptionId);
+
         renderOrderSummary();
         renderPaymentSummary();
       });
