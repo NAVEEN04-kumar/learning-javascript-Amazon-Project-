@@ -1,7 +1,14 @@
-import renderPaymentSummary from '../../scripts/checkout/paymentSummary.js';
-import { loadFromStorage } from '../../data/cart.js';
+import { renderPaymentSummary } from '../../scripts/checkout/paymentSummary.js';
+import { cart } from '../../data/cart-class.js';
+import { loadProductsFetch } from '../../data/products.js';
 
 describe('test suite: renderPaymentSummary', () => {
+
+  beforeAll((done) => {
+    loadProductsFetch().then(() => {
+      done();
+    });
+  });
 
   beforeEach(() => {
     spyOn(localStorage, 'getItem').and.callFake(() => {
@@ -16,7 +23,7 @@ describe('test suite: renderPaymentSummary', () => {
       }]);
     });
 
-    loadFromStorage();
+    cart.loadFromStorage;
 
     document.querySelector('.js-test-container').innerHTML =
       '<div class="js-payment-summary"></div>';
@@ -66,7 +73,7 @@ describe('test suite: renderPaymentSummary', () => {
       }]);
     });
 
-    loadFromStorage();
+    cart.loadFromStorage;
     renderPaymentSummary();
 
     expect(
@@ -79,7 +86,7 @@ describe('test suite: renderPaymentSummary', () => {
       return JSON.stringify([]);
     });
 
-    loadFromStorage();
+    cart.loadFromStorage;
     renderPaymentSummary();
 
     expect(

@@ -1,6 +1,6 @@
 import formatCurrency from "../scripts/utils/money.js";
 
-class Product {
+export class Product {
 
   id;
   image;
@@ -30,7 +30,7 @@ class Product {
 
 }
 
-class Clothing extends Product {
+export class Clothing extends Product {
 
   sizeChartLink;
 
@@ -49,7 +49,7 @@ class Clothing extends Product {
 
 }
 
-class Appliance extends Product {
+export class Appliance extends Product {
 
   instructionsLink;
   warrantyLink;

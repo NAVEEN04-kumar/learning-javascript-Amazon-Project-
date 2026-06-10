@@ -1,7 +1,5 @@
 import renderCheckoutHeader from '../../scripts/checkout/checkoutHeader.js';
-import {
-  loadFromStorage
-} from '../../data/cart.js';
+import { cart } from '../../data/cart-class.js';
 
 describe('test suite: renderCheckoutHeader', () => {
 
@@ -18,7 +16,7 @@ describe('test suite: renderCheckoutHeader', () => {
       }]);
     });
 
-    loadFromStorage();
+    cart.loadFromStorage;
 
     document.querySelector('.js-test-container').innerHTML =
       '<div class="js-checkout-header"></div>';
@@ -49,7 +47,7 @@ describe('test suite: renderCheckoutHeader', () => {
       }]);
     });
 
-    loadFromStorage();
+    cart.loadFromStorage;
     renderCheckoutHeader();
 
     expect(
@@ -62,7 +60,7 @@ describe('test suite: renderCheckoutHeader', () => {
       return JSON.stringify([]);
     });
 
-    loadFromStorage();
+    cart.loadFromStorage;
     renderCheckoutHeader();
 
     expect(
