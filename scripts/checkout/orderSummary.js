@@ -51,15 +51,28 @@ export function renderOrderSummary() {
                 <span>
                   Quantity: <span class="quantity-label">${cartItem.quantity}</span>
                 </span>
-                <span class="update-quantity-link link-primary">
+
+                <span class= "update-quantity-link link-primary
+                js-update-link"
+                data-product-id = "${matchingProduct.id}">
                   Update
                 </span>
+
+                <input class="quantity-input js-quantity-input-${matchingProduct.id}">
+
+                <span class="save-quantity-link link-primary
+                js-save-link"
+                data-product-id = "${matchingProduct.id}">
+                  Save
+                </span>
+
                 <span class="delete-quantity-link link-primary 
                 js-delete-link
                 js-delete-link-${matchingProduct.id}"
                 data-product-id = "${matchingProduct.id}">
                   Delete
                 </span>
+
               </div>
             </div>
 
@@ -129,13 +142,55 @@ export function renderOrderSummary() {
       });
     });
 
-    document.querySelectorAll('.js-delivery-option')
-      .forEach((element) => {
-        element.addEventListener('click', () => {
-          const { productId, deliveryOptionId} = element.dataset;
-          cart.updateDeliveryOption(productId, deliveryOptionId);
-          renderOrderSummary();
-          renderPaymentSummary();
-        });
+  document.querySelectorAll('.js-update-link')
+    .forEach((link) => {
+      link.addEventListener('click', () => {
+        const productId = link.dataset.productId;
+
+        const container = document.querySelector(`.js-cart-item-container-${productId}`);
+        container.classList.add('is-editing-quantity');
       });
+    });
+
+  document.querySelectorAll('.js-save-link')
+    .forEach((link) => {
+      link.addEventListener('click', () => {
+        const productId = link.dataset.productId;
+
+        const quantityInput = document.querySelector(`
+          .js-quantity-input-${productId}
+        `);
+        const newQuantity = Number(quantityInput.value);
+
+        if (newQuantity <= 0 || newQuantity > 100) {
+          alert('Quantity must be at least 1 and less than 100');
+          return;
+        }
+
+        cart.updateQuantity(productId, newQuantity);
+
+        const container = document.querySelector(`
+          .js-cart-item-container-${productId}
+        `);
+        container.classList.remove('is-editing-quantity');
+
+        const quantityLabel = document.querySelector(`
+          .js-quantity-label-${productId}`
+        );
+        quantityLabel.innerHTML = newQuantity;
+
+        renderPaymentSummary();
+      });
+    });
+
+
+  document.querySelectorAll('.js-delivery-option')
+    .forEach((element) => {
+      element.addEventListener('click', () => {
+        const { productId, deliveryOptionId} = element.dataset;
+        cart.updateDeliveryOption(productId, deliveryOptionId);
+        renderOrderSummary();
+        renderPaymentSummary();
+      });
+    });
 }

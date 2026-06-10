@@ -70,6 +70,37 @@ class Cart {
 
     this.saveToStorage();
   }
+
+  calculateCartQuantity () {
+    let cartQuantity = 0;
+    this.cartItem.forEach((cartItem) => {
+      cartQuantity += cartItem.quantity;
+    });
+
+    return cartQuantity;
+  }
+
+  updateQuantity(productId, newQuantity) {
+    let matchingItem;
+
+    this.cartItem.forEach((cartItem) => {
+      if(productId === cartItem.productId) {
+        matchingItem = cartItem;
+      }
+    });
+
+    if(!matchingItem) {
+      return;
+    }
+
+    if(typeof newQuantity !== 'number' || newQuantity <= 0 || !Number.isInteger(newQuantity)) {
+      return;
+    }
+
+    matchingItem.quantity = newQuantity;
+
+    this.saveToStorage();
+  }
   
   updateDeliveryOption(productId, deliveryOptionId) {
 
