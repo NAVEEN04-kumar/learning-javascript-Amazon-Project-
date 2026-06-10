@@ -4,10 +4,10 @@ import {
   getProduct 
 } from '../../data/products.js';
 import  formatCurrency  from '../utils/money.js';
-import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { 
   deliveryOptions,
-  getDeliveryOption
+  getDeliveryOption,
+  calculateDeliveryDate
 } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 
@@ -25,14 +25,7 @@ export function renderOrderSummary() {
 
     const deliveryOption = getDeliveryOption(deliveryOptionId);
 
-    const today = dayjs();
-    const deliveryDate = today.add(
-      deliveryOption.deliveryDays,
-      'days'
-    );
-    const dateString = deliveryDate.format(
-      'dddd, MMMM D'
-    );
+    const dateString = calculateDeliveryDate(deliveryOption)
 
     cartSummaryHTML += `
       <div class="
@@ -81,20 +74,15 @@ export function renderOrderSummary() {
     `;
   });
 
+  document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
+
   function deliveryOptionsHTML(matchingProduct, cartItem) {
     
     let html = '';
     
     deliveryOptions.forEach((deliveryOption) => {
 
-      const today = dayjs();
-      const deliveryDate = today.add(
-        deliveryOption.deliveryDays,
-        'days'
-      );
-      const dateString = deliveryDate.format(
-        'dddd, MMMM D'
-      );
+      const dateString = calculateDeliveryDate(deliveryOption);
 
       const priceString = deliveryOption.priceCents === 0
         ? 'FREE Shipping'
@@ -124,8 +112,6 @@ export function renderOrderSummary() {
 
     return html;
   }
-
-  document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
 
   document.querySelectorAll('.js-delete-link')
     .forEach((link) => {
