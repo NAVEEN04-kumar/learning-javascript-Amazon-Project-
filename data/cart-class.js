@@ -41,8 +41,11 @@ class Cart {
       }
     });
 
+    const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
+    const quantity = quantitySelector ? Number(quantitySelector.value) : 1;
+
     if (matchingItem) {
-      matchingItem.quantity += 1;
+      matchingItem.quantity += quantity;
     } else {
         this.cartItem.push({
           productId,
